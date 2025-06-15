@@ -10,12 +10,17 @@ while True:
     if starting == "yes":
         print("Great, let's get started!")
 
+#Short cuts
+        def what_direction():
+            pick = input("What way woulld you like to go? Left or right: ")   
+            pick = pick[0].lower
+
 #Begining game
         print("After wondering around the enchanted forest you wake up in a cold and dark cave. You remember wandering in and then there was a cave in! Now you have to find your own way out.")
         print("While wiping dirt off your clothes you find 3 items, a fully charged torch, a knife, and a small bag of trail mix.")
         light = input("Will you turn on the torch? yes/no: ")
         if light == "no":
-            print("You failed to escape the cave! Game over.")
+            print("You failed to escape the cave! Game over")
         if light == "yes":
             print("You turn on the torch and find two tunnles")
 
