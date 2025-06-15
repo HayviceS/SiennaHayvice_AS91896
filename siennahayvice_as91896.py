@@ -25,10 +25,6 @@ while True:
             print("You turn on the torch and find two tunnles")
 
 
-
-
-
-
     if starting == "no":
         exit = input("Are you sure you don't want to contiune? yes/no: ")
         exit.lower
