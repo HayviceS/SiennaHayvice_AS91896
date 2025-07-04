@@ -13,6 +13,8 @@ def what_direction():
     else:
         print("Please trying writing that again, I don't understand")
 
+        
+
 #Asking if user want to play
 while True:
     name = input("Hello adventurer! What is your name? ")
@@ -43,8 +45,19 @@ while True:
         print("You turn on the torch and find two tunnles")
     pick = what_direction()
     if pick == 'l':
-        print("You have choosen to go down the left path")
+        room2()
     if pick == 'r':
-        print("You have choosen to go down the right path")
+        room3()
 
-       
+def room2():
+        print("You have entered you have entered the room to your left.")
+        print("This room is a dead end, you go back to the start")
+
+def room3():
+        print("You have entered the room to your right.")
+        print("There is a tunnel to the left and a tunneSl to the right")
+        pick = what_direction()
+        if pick == 'l':
+            room4()
+        if pick == 'r':
+            room5()
