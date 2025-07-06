@@ -58,16 +58,15 @@ def room8():
         print("Your mouth is dry and you are thirsty. You see a small fountain and have to deside if you will drink the water or if you will continue and risk dying of dehydration before escaping.")
         print("You don't know if the water is safe to drink but you don't know how much longer you will be stuck for.")
         drink = input("Will you drink the water? yes/no: ")
+        drink = drink[0].lower()
         if drink == "yes":
-            drink = drink[0].lower()
             print("You drink the water and die instantly from posioning. Game over!")
         if drink == "no":
-            drink = drink[0].lower()
             print("You choose to not drink the water and continue onto the next room.")
             room9()
         else: 
             print("Please trying writing that again, I don't understand. Write 'yes or 'no':")
-            return drink()
+            drink()
         
 def room9():
         print("You have entered the next room.")
