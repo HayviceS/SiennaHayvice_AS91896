@@ -1,7 +1,6 @@
 #Stating risks
 print("This game has themes, of death, being trapped, posion, claustrophobia. If you are not ok with this I would suggest you dont continue. This game may also save your data\n\
     and can not garantie your privicy.")
-
 #Asking if user want to play
 def start_game():
     global name
@@ -38,7 +37,7 @@ def what_direction():
 def room2():
         print("You have entered you have entered the room to your left.")
         print("This room is a dead end")
-        return False
+        return "loss"
 
 def room3():
         print("You have entered the room to your right.")
@@ -55,10 +54,12 @@ def room4():
             return room6()
 
 def room5():
+        global death_count
         print("You have entered the room to your left.")
         print("As you walk into the room you walk into a trip wire and a poisonous gas fills the room killing you.")
         print("Game over")
-        return False
+        death_count += 1 
+        return "loss"
             
 def room6():
         print("You have entered the room to your right.")
@@ -75,6 +76,7 @@ def room7():
         return room6()
 
 def room8():
+        global death_count
         print("You have entered the room to your right.")
         print("Your mouth is dry and you are thirsty. You see a small fountain and have to deside if you will drink the water or if you will continue and risk dying of dehydration before escaping.")
         print("You don't know if the water is safe to drink but you don't know how much longer you will be stuck for.")
@@ -82,7 +84,8 @@ def room8():
         drink = drink[0].lower()
         if drink == "y":
             print("You drink the water and die instantly from posioning. Game over!")
-            return
+            death_count += 1
+            return "loss"
         if drink == "n":
             print("You choose to not drink the water and continue onto the next room.")
             return room9()
@@ -94,11 +97,13 @@ def room9():
         print("You have entered the next room.")
         print("You see a way out! You run toward it and find yourself outside the cave and back in the enchanted forest.")
         print("Congratulations {}, you escaped the cave and you can now make your way back home! You win!".format(name))
-        return True
+        print("In total you have died {} through out the game!".format(death_count))
+        return "win"
 
 
 #Main game
 def main_game():
+    global death_count
     print("After wondering around the enchanted forest you wake up in a cold and dark cave. You remember wandering in and then there was a cave in! Now you have to find your own way out.")
     print("While wiping dirt off your clothes you find 3 items, a fully charged torch, a knife, and a small bag of trail mix.")
 
@@ -111,21 +116,29 @@ def main_game():
         if light == "no":
             light = light[0].lower()
             print("You failed to escape the cave! Game over") 
-            return False
+            death_count += 1
+            return "loss"
         else:
             print("Please trying writing that again, I don't understand. Write 'yes' or 'no': ")
 
     pick = what_direction()
     if pick == 'l':
-        return room2()
+        return room2() or "loss"
     if pick == 'r':
-        return room3()
+        return room3() or "loss"
 
 #Making loop
 def play_loop():
+    global death_count
+    death_count = 0 
+
     while True:
         start_game()
         result = main_game()
+
+        if result == "win":
+             death_count = 0
+
         again = input("Do you want to play again? yes/no: ")
         again = again[0].lower()
         if again == '':
