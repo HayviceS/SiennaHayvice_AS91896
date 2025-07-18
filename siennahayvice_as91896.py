@@ -1,27 +1,35 @@
 #Stating risks
 print("WARNING: This game has themes of death, entrapment, poison, claustrophobia. Due to these themes if you are not comfortable continuing please exit the game. This game may also save your data\n\
     and can not guarantee your privacy.")
+
+#Yes or No def shortcut
+#Used for all yes or no questions as you can modify it to fit the situation
+def yes_no(message = "Write 'yes' or 'no' to answer: "): 
+     while True:
+          user_input = input(message)
+          user_input = user_input[0].lower()
+          if user_input == "y":
+               return True
+          elif user_input == "n":
+               return False
+          else:
+               print("Please try writing that again, either answer with 'yes' or 'no': ")
+
 #Asking if user want to play
 def start_game():
     global name
     while True:
         name = input("Hello adventurer! What is your name?: ")
         name = name[0].upper() + name[1:].lower()
-        starting = input("Welcome {}, Are you ready to get started? yes/no: ".format(name)).lower()
-        if starting == "yes":
-            print("Great, let's get started!")
-            break
-        elif starting == "no":
-            leave = input("Are you sure you don't want to contiune? yes/no: ")
-            leave.lower()
-            if leave == "yes": 
-                print("That's fine! Maybe another time.")
-                exit()
-            elif leave == "no":
-                print("Then let's get started!")
-                break
+        if yes_no("Welcome {}, Are you ready to get started? yes/no: ".format(name)):
+             print("Great, let's get started!")
+             return 
+        else:
+             print("That's fine! Maybe another time.")
+             exit()
 
-#Direction shortcut
+#Direction def shortcut
+#Used for all questions where you have to pick a left or right direction
 def what_direction():
     pick = input("What way would you like to go? Left or right: ")   
     if pick == '': 
@@ -75,26 +83,28 @@ def room6():
             return room8()
 
 def room7():
-        print("The room is lit up by torches and you see drawings on the walls depicting ancient battles. However, there is no way out this way and so you return to the room you were in prior.")
-        return room6()
+        print("The room is lit up by torches and you see drawings on the walls depicting ancient battles.")
+        print("You stand in the room and feel your knife in your pocket.")
+        if yes_no("Do you use the knife to draw/write something on the wall? Yes/no: "):
+            wall_writing = input("What do you write or draw on the wall?: ")
+            print("You leave {} on the wall and then turn to make your way back to the room you were last in".format(wall_writing))
+            return room6()
+        else:
+             print("You decide to not damage the wall and go back to the room you came from.")
+             return room6()
 
 def room8():
         global death_count
         print("You have entered the room to your right.")
         print("Your mouth is dry and you are thirsty. You see a small fountain and have to decide if you will drink the water or if you will continue and risk dying of dehydration before escaping.")
         print("You don't know if the water is safe to drink but you don't know how much longer you will be stuck for.")
-        drink = input("Will you drink the water? yes/no: ")
-        drink = drink[0].lower()
-        if drink == "y":
-            print("You drink the water and die instantly from poisoning. Game over!")
-            death_count += 1
-            return "loss"
-        if drink == "n":
-            print("You choose to not drink the water and continue onto the next room.")
-            return room9()
-        else: 
-            print("Please trying writing that again, I don't understand. Write 'yes or 'no':")
-            return room8()
+        if yes_no("Will you drink the water? Yes/no: "):
+             print("You drink the water and die instantly from poisoning. Game over!")
+             death_count += 1
+             return "loss"
+        else:
+             print("You choose to not drink the water and continue onto the next room.")
+             return room9()
         
 def room9():
         print("You have entered the next room.")
@@ -111,26 +121,21 @@ def main_game():
     print("While wiping dirt off your clothes you find 3 items, a fully charged torch, a knife, and a small bag of trail mix.")
 
     while True:
-        light = input("Will you turn on the torch? yes/no: ")
-        if light == "yes":
-            light = light[0].lower()
-            print("You turn on the torch and find two tunnels")
-            break
-        if light == "no":
-            light = light[0].lower()
-            print("You failed to escape the cave! Game over") 
-            death_count += 1
-            return "loss"
+        if yes_no("Will you turn on the torch? Yes/no: "):
+             print("You turn on the torch and find two tunnels")
         else:
-            print("Please trying writing that again, I don't understand. Write 'yes' or 'no': ")
-
-    pick = what_direction()
-    if pick == 'l':
-        return room2() or "loss"
-    if pick == 'r':
-        return room3() or "loss"
+             print("You failed to escape the cave! Game over!")
+             death_count += 1
+             return "loss"
+        
+        pick = what_direction()
+        if pick == 'l':
+            return room2() or "loss"
+        if pick == 'r':
+            return room3() or "loss"
 
 #Making loop
+#Makes the game able to start again and leads the death count to be added and reset
 def play_loop():
     global death_count
     death_count = 0 
@@ -142,18 +147,12 @@ def play_loop():
         if result == "win":
              death_count = 0
 
-        again = input("Do you want to play again? yes/no: ")
-        again = again[0].lower()
-        if again == '':
-            return None
-        if again == 'y':
-            print("Great let's play again!")
-            continue
-        elif again == 'n':
-            print("That's fine! Maybe another time.")
-            return
+        if yes_no("Do you want to play again? Yes/no: "):
+            print("The game will restart now!")
         else:
-            print("Please try writing that again, I don't understand")
+             print("That's fine, play again soon!")
+             exit()
+            
 
 #Restart
 play_loop()
