@@ -38,7 +38,7 @@ def what_direction():
     if pick in ['l','r']:
         return pick
     else:
-        print("Please trying writing that again, I don't understand")
+        print("Please try writing that again, I don't understand")
         return what_direction()
 
 # Defining rooms
