@@ -48,6 +48,7 @@ def room2():
         print("You quickly recognize this room is a dead end and before you can turn back there is another cave in and you die")
         print("Game over!")
         death_count += 1
+        death_log.append("Died in a cave in")
         return "loss"
 
 def room3():
@@ -70,6 +71,7 @@ def room5():
         print("As you walk into the room you walk into a trip wire and a poisonous gas fills the room killing you.")
         print("Game over")
         death_count += 1 
+        death_log.append("Died due to poisonous gas")
         return "loss"
             
 def room6():
@@ -101,6 +103,7 @@ def room8():
         if yes_no("Will you drink the water? Yes/no: "):
              print("You drink the water and die instantly from poisoning. Game over!")
              death_count += 1
+             death_log.append("Died due to poison")
              return "loss"
         else:
              print("You choose to not drink the water and continue onto the next room.")
@@ -111,6 +114,7 @@ def room9():
         print("You see a way out! You run toward it and find yourself outside the cave and back in the enchanted forest.")
         print("Congratulations {}, you escaped the cave and you can now make your way back home! You win!".format(name))
         print("In total you have died {} times through out the game!".format(death_count))
+        print(death_log)
         return "win"
 
 
@@ -126,6 +130,7 @@ def main_game():
         else:
              print("You failed to escape the cave! Game over!")
              death_count += 1
+             death_log.append("Died, stuck in cave")
              return "loss"
         
         pick = what_direction()
@@ -137,15 +142,21 @@ def main_game():
 #Making loop
 #Makes the game able to start again and leads the death count to be added and reset
 def play_loop():
+    global death_log
     global death_count
+    death_log = []
     death_count = 0 
 
     while True:
+
         start_game()
         result = main_game()
 
         if result == "win":
-             death_count = 0
+            death_count = 0
+        if result == "win":
+             death_log = []
+
 
         if yes_no("Do you want to play again? Yes/no: "):
             print("The game will restart now!")
